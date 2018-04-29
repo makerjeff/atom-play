@@ -44,9 +44,17 @@ io.on('connection', (socket) => {
 
       // socket.emit('error', `Error joining room ${room}`);
       // socket.broadcast.to(socket.id).emit('message', 'no room by that name!');
-
     }
+  });
 
+  socket.on('get rooms', (data) => {
+    // console.log(data);
+    console.log(socket.rooms);
+  });
+
+  socket.on('room message', (message) => {
+    console.log(`${socket.id} is sending a message to room`);
+    io.to('123abc').emit('room message', 'hello!');
   });
 
   // disconnect

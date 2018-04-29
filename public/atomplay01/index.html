@@ -8,7 +8,31 @@
   <meta name="viewport" contents="width=device_width, initial-scale=1.0">
 
   <style>
+    .debug_console {
 
+      width: 100vh;
+      height: 50px;
+      display: flex;
+      position: fixed;
+
+      bottom: 0;
+      left: 0;
+
+      background: black;
+      color: white;
+
+    }
+
+    .debug_console > form > input{
+      font-size: 32px;
+      background: transparent;
+      color: #00aaaa;
+    }
+
+    .debug_console > form > button {
+      background: red;
+      border: 0;
+    }
   </style>
 
 </head>
@@ -16,15 +40,27 @@
 
 <body>
 
-<div id="room_select_div">
-  <form id="room_select_form">
-    <input id="room_select_input" type="text" autocomplete="off">
-    <button id="room_select_button">join</button>
-  </form>
-</div>
+  <!-- ROOM SELECT -->
+  <div id="room_select_div">
+    <form id="room_select_form">
+      <input id="room_select_input" type="text" autocomplete="off">
+      <button id="room_select_button">join</button>
+    </form>
+  </div>
 
-
+  <!-- PING BUTTON -->
   <button id="ping_button"> Ping! </button>
+
+
+  <!-- DEBUGGING CONSOLE -->
+  <div class="debug_console">
+
+    <form id="debug_console_form">
+      <input type="text" name="console_input" autocomplete="off">
+      <button id="console_input_button">send</button>
+    </form>
+
+  </div>
 
   <script src="/socket.io/socket.io.js"></script>
   <script>
@@ -35,7 +71,11 @@
     let room_select_input = document.getElementById('room_select_input');
     let ping_button = document.getElementById('ping_button');
 
+    let debug_console_form = document.getElementById('debug_console_form');
+
+
     // globals
+    let state = undefined;
     let room = '123abc';
     let socket = io.connect();
 
@@ -47,10 +87,43 @@
       console.log(`from server: ${message} : ${Date.now()}`);
     });
 
+    socket.on('room message', (message) => {
+      console.log(`from roomies: ${message} : ${Date.now()}`);
+    });
+
     // --- helper functions ---
+    // PING
     function pinger(message) {
-      console.log(`attempting to send _ping : ${Date.now()}`);
-      socket.emit('_ping', message );
+      if (state === undefined) {
+        console.log(`attempting to send _ping : ${Date.now()}`);
+        socket.emit('_ping', message );
+      } else {
+        console.log(`Sending Ping to ROOMIES!`);
+        socket.emit('message room', 'HEY ROOMIES!');
+      }
+    }
+
+    // update the background based on state.
+    function update_background(state) {
+      let color = 'rgb(255,255,255)';
+
+      // change the color
+      switch (state) {
+
+        case 'connected':
+        color = 'rgb(0,255,200)';
+        break;
+
+        case 'disconnected':
+        color = 'rgb(240,100,100)';
+        break;
+
+        default:
+        color = 'rgb(255,255,255)';
+      }
+
+      // update the update_background
+      document.body.style.backgroundColor = color;
     }
 
     //TODO: get-current-room
@@ -67,9 +140,16 @@
         console.log(`Sending to server: ${input.value} : ${Date.now()}`);
         socket.emit('room', input.value);
         input.value = '';
-
       }
     });
+
+    debug_console_form.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      console.log(`to room: ${ev.target.children[0].value}`);
+
+      socket.emit('get rooms', 'hi');
+    });
+
     // Pinger event.
     ping_button.addEventListener('click', (ev) => {
       pinger(`I PINGED you!`);
