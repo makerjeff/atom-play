@@ -1,0 +1,23 @@
+/* STYLE.CSS */
+
+
+/* --- debug console styles --- */
+.debug_console {
+  width: 100vh;
+  height: 50px;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: black;
+  color: white;
+}
+.debug_console > form > input{
+  font-size: 16px;
+  background: transparent;
+  color: #00aaaa;
+}
+.debug_console > form > button {
+  background: red;
+  border: 0;
+}
