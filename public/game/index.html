@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale= 1.0">
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/main.css">
+
+  <style>
+    canvas {
+      border: 1px solid black;
+      background: #aaa;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ============ main screen - START ============ -->
+  <div id="main_container" class="main_container">
+    <!-- top section -->
+    <div class="main__top_section">
+      <h1 id="game_title">Game</h1>
+      <h3 id="game_subtitle">An amazing game.</h3>
+    </div>
+    <!-- bottom section -->
+    <div class="main__bottom_section">
+      <button id="start_button" class="btn">start</button>
+      <button id="join_button" class="btn">join</button>
+    </div>
+  </div>
+  <!-- ============ main screen - END ============= -->
+
+  <!-- ============ game screen - START ============= -->
+  <div id="game_container" class="game_container">
+    <canvas id="game_canvas" width="500" height="500">
+  </div>
+  <!-- ============ game screen - END ============ -->
+
+  <!-- ============ join screen - START ============= -->
+  <div id="join_container" class="join_container">
+    <form id="join_form">
+      <input id="join_form_input" type="text">
+      <button id="join_form_button">join</button>
+    </form>
+  </div>
+  <!-- ============ join screen - END ============ -->
+
+
+<!-- SCRIPTS -->
+<script src="./js/join_logic.js"></script>
+<script src="./js/main.js"></script>
+</body>
+</html>

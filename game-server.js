@@ -65,9 +65,8 @@ io.on('connection', (socket) => {
 // use static routes
 app.use(express.static('public/'));
 
-
 // start server
 http.listen(3000, function() {
   clear();
-  console.log('Server started on 3000');
+  console.log(`Game server started on ${chalk.green('3000')}`);
 });

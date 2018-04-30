@@ -1,0 +1,28 @@
+/* BASE.CSS */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+.btn {
+  background: black;
+  color: white;
+  width: 300px;
+  height: auto;
+  margin: 10px;
+  padding: 25px;
+  border: none;
+  border-radius: 4px;
+}
+.btn:active {
+  transform: scale(1.1);
+}
